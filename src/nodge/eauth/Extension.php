@@ -10,15 +10,19 @@
 namespace nodge\eauth;
 
 use Yii;
+use yii\base\BootstrapInterface;
+use yii\base\Application;
 
 /**
  * This is the bootstrap class for the yii2-eauth extension.
  */
-class Extension extends \yii\base\Extension {
-	/**
-	 * @inheritdoc
-	 */
-	public static function init() {
-		Yii::setAlias('@eauth', __DIR__);
-	}
+class Extension implements BootstrapInterface {
+    /**
+     * @inheritdoc
+     */
+    public function bootstrap(Application $app) {
+        $app->on(Application::EVENT_BEFORE_REQUEST, function() {
+            Yii::setAlias('@eauth', __DIR__);
+        });
+    }
 }
